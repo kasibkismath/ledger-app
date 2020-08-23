@@ -1,6 +1,6 @@
 const moment = require("moment");
 
-const dateConverter = require("../../util/converts/date-converter");
+const dateConverter = require("../../util/converters/date-converter");
 const frequency = require("../../util/enums/frequency.enum");
 
 exports.getTenantLeadgerDetails = (
@@ -25,7 +25,7 @@ exports.calculateDateRangesByFrequency = (
     weeklyRent
 ) => {
     if (moment(leadgerEndDate).isSameOrBefore(moment(leadgerStartDate))) {
-        console.error(
+        console.log(
             "Validation Error -> TenantLeadgerService::calculateDateRangesByFrequency - End date should be on the same day or after the start date"
         );
         return;
