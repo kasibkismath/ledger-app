@@ -1,89 +1,126 @@
-const express = require('express');
-const request = require('supertest');
+const chai = require('chai');
 const expect = require('chai').expect;
+const chaiHttp = require('chai-http');
 
-const tenantLeadgerCtrl = require('../app/controllers/tenant-ledger/tenant-ledger.controller');
+const app = require('../app');
 
-const weeklyData = require('./mocks/weekly-tenant-ledger.json');
+const weeklyData = require('./mocks/happy/weekly-tenant-ledger.json');
+const fortnightlyData = require('./mocks/happy/fortnightly-tenant-ledger.json');
+const monthlyData = require('./mocks/happy/monthly-tenant-ledger.json');
 
-describe('Executing cash in hand test cases', function() {
-    let cashInHand;
+const startDateRequiredValidationJSON = require('./mocks/unhappy/start-date-required-validation.json');
+const endDateRequiredValidationJSON = require('./mocks/unhappy/end-date-required-validation.json');
+const startDateISOValidationJSON = require('./mocks/unhappy/start-date-iso-validation.json');
+const endDateISOValidationJSON = require('./mocks/unhappy/end-date-iso-validation.json');
 
-    before(function(done) {
-        this.cashInHand = 50;
-        done();
-    });
-
-    it('Check more cash in hand', function(done) {
-        const shirtPrice = 20;
-        const shoePrice = 20;
-
-        if(shirtPrice + shoePrice > cashInHand) {
-            expect(this.cashInHand).lessThan(shirtPrice + shoePrice);
-        } else {
-            done();
-        }
-    });
-
-    it('Check less cash in hand', function(done) {
-        const shirtPrice = 40;
-        const shoePrice = 20;
-
-        if(shirtPrice + shoePrice > cashInHand) {
-            expect(this.cashInHand).lessThan(shirtPrice + shoePrice);
-        } else {
-            done();
-        }
-    });
-});
+chai.use(chaiHttp);
 
 describe('Preparing tenant ledger test cases', function() {
-    function initServer() {
-        let server = express();
-
-        const router = express.Router();
-        router.route('/api/lease/ledger').get(function(req, res) {
-            return res.send(res.body);
-        });
-
-        server.use(router);
-
-        return server;
-    }
-
-    describe('Executing tenant ledger test cases', function() {
-        let app;
-        let listen;
-
-        before(function(done) {
-            app = initServer();
-            listen = app.listen(4000, function(err) {
-                if(err) {
-                    return done(err);
-                }
+    describe('GET /api/lease/ledger VALIDATIONS', function() {
+        it('Required start_date validation', (done) => {
+            chai.request(app)
+            .get('/api/lease/ledger')
+            .query({
+             end_date: "2020-05-27T07:23:31.066Z", 
+             frequency: "WEEKLY", 
+             weekly_rent: 555, 
+             timezone: "Australia/Melbourne"})
+            .end((err, res) => {
+                expect(res.status).equals(400);
+                expect(res.body).to.be.deep.equal(startDateRequiredValidationJSON);
                 done();
             });
         });
 
-        it('Check weekly ledger details', async() => {
-            await
-            request(app)
+        it('start_date ISO format validation', (done) => {
+            chai.request(app)
             .get('/api/lease/ledger')
-            .query({
-                    start_date: "2020-03-28T12:23:31.066Z",
-                    end_date: "2020-05-27T07:23:31.066Z",
-                    frequency: "WEEKLY",
-                    weekly_rent: 555,
-                    timezone: "Australia/Melbourne"
-                })
-            .expect(200, function(err, res) {
-                console.log(err);
-                expect(res.body).to.equal(weeklyData);
+            .query({start_date: "2020-03-28 12:23:31",
+             end_date: "2020-05-27T07:23:31.066Z", 
+             frequency: "WEEKLY", 
+             weekly_rent: 555, 
+             timezone: "Australia/Melbourne"})
+            .end((err, res) => {
+                expect(res.status).equals(400);
+                expect(res.body).to.be.deep.equal(startDateISOValidationJSON);
+                done();
             });
         });
 
-        after(done => {
-            listen.close(done);
+        it('Required end_date validation', (done) => {
+            chai.request(app)
+            .get('/api/lease/ledger')
+            .query({
+                start_date: "2020-03-28T12:23:31.066Z",
+                frequency: "WEEKLY", 
+                weekly_rent: 555, 
+                timezone: "Australia/Melbourne"})
+            .end((err, res) => {
+                expect(res.status).equals(400);
+                expect(res.body).to.be.deep.equal(endDateRequiredValidationJSON);
+                done();
+            });
+        });
+        it('end_date ISO format validation', (done) => {
+            chai.request(app)
+            .get('/api/lease/ledger')
+            .query({start_date: "2020-03-28T07:23:31.066Z",
+             end_date: "2020-05-27T07:23:31.066", 
+             frequency: "WEEKLY", 
+             weekly_rent: 555, 
+             timezone: "Australia/Melbourne"})
+            .end((err, res) => {
+                expect(res.status).equals(400);
+                expect(res.body).to.be.deep.equal(endDateISOValidationJSON);
+                done();
+            });
+        });
+    });
+
+    describe('GET /api/lease/ledger', function() {
+        it('Fetch weekly ledger details', (done) => {
+            chai.request(app)
+            .get('/api/lease/ledger')
+            .query({start_date: "2020-03-28T12:23:31.066Z",
+             end_date: "2020-05-27T07:23:31.066Z", 
+             frequency: "WEEKLY", 
+             weekly_rent: 555, 
+             timezone: "Australia/Melbourne"})
+            .end((err, res) => {
+                expect(res.status).equals(200);
+                expect(res.body).to.be.deep.equal(weeklyData);
+                done();
+            });
+        });
+
+        it('Fetch fortnightly ledger details', (done) => {
+            chai.request(app)
+            .get('/api/lease/ledger')
+            .query({start_date: "2020-03-28T12:23:31.066Z",
+             end_date: "2020-05-27T07:23:31.066Z", 
+             frequency: "FORTNIGHTLY", 
+             weekly_rent: 555, 
+             timezone: "Australia/Melbourne"})
+            .end((err, res) => {
+                expect(res.status).equals(200);
+                expect(res.body).to.be.deep.equal(fortnightlyData);
+                done();
+            });
+        });
+
+        it('Fetch monthly ledger details', (done) => {
+            chai.request(app)
+            .get('/api/lease/ledger')
+            .query({start_date: "2020-03-28T12:23:31.066Z",
+             end_date: "2020-05-27T07:23:31.066Z", 
+             frequency: "MONTHLY", 
+             weekly_rent: 555, 
+             timezone: "Australia/Melbourne"})
+            .end((err, res) => {
+                expect(res.status).equals(200);
+                expect(res.body).to.be.deep.equal(monthlyData);
+                done();
+            });
         });
     });
 });

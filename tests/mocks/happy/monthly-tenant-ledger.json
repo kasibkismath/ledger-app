@@ -1,0 +1,16 @@
+{
+    "success": true,
+    "message": "Success",
+    "data": [
+        {
+            "startDate": "March 28th, 2020",
+            "endDate": "April 27th, 2020",
+            "amount": "2220.00"
+        },
+        {
+            "startDate": "April 28th, 2020",
+            "endDate": "May 27th, 2020",
+            "amount": "2220.00"
+        }
+    ]
+}

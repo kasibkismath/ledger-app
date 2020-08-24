@@ -1,0 +1,12 @@
+{
+    "success": false,
+    "message": "Failed",
+    "data": {
+        "errors": [
+            {
+                "key": "end_date",
+                "message": "end_date is required"
+            }
+        ]
+    }
+}

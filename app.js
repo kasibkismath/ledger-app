@@ -12,3 +12,5 @@ const port = process.env.PORT || 4000;
 app.listen(port, () =>
     console.info(`Ledger app has been started on port -> ${port}`)
 );
+
+module.exports = app;

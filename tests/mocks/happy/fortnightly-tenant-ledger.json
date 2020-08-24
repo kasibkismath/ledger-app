@@ -1,0 +1,31 @@
+{
+    "success": true,
+    "message": "Success",
+    "data": [
+        {
+            "startDate": "March 28th, 2020",
+            "endDate": "April 10th, 2020",
+            "amount": "1110.00"
+        },
+        {
+            "startDate": "April 11th, 2020",
+            "endDate": "April 24th, 2020",
+            "amount": "1110.00"
+        },
+        {
+            "startDate": "April 25th, 2020",
+            "endDate": "May 8th, 2020",
+            "amount": "1110.00"
+        },
+        {
+            "startDate": "May 9th, 2020",
+            "endDate": "May 22nd, 2020",
+            "amount": "1110.00"
+        },
+        {
+            "startDate": "May 23rd, 2020",
+            "endDate": "May 27th, 2020",
+            "amount": "396.43"
+        }
+    ]
+}

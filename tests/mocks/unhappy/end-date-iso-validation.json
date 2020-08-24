@@ -1,0 +1,12 @@
+{
+    "success": false,
+    "message": "Failed",
+    "data": {
+        "errors": [
+            {
+                "key": "end_date",
+                "message": "Invalid fully qualified ISO date fromat given for end_date"
+            }
+        ]
+    }
+}
