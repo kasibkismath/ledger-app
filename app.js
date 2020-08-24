@@ -5,7 +5,7 @@ const app = express();
 
 app.use(bodyParser.json());
 
-let routes = require("./app/routes/tenant-ledger/tenant-ledger.route");
+let routes = require("./src/routes/tenant-ledger/tenant-ledger.route");
 routes(app);
 
 const port = process.env.PORT || 4000;
