@@ -17,4 +17,4 @@ To run the application use `npm start`.
 To execute the unit test cases and run the application, use `npm start:with:test`.
 
 ### Contact
-Do feel free to contact [me](kasibkismath@gmail.com) for any queries and this project is open for development.
+Do feel free to contact [me](mailto:kasibkismath@gmail.com) for any queries and this project is open for development.
