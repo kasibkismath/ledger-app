@@ -1,0 +1,51 @@
+{
+    "success": true,
+    "message": "Success",
+    "data": [
+        {
+            "startDate": "March 28th, 2020",
+            "endDate": "April 3rd, 2020",
+            "amount": "555.00"
+        },
+        {
+            "startDate": "April 4th, 2020",
+            "endDate": "April 10th, 2020",
+            "amount": "555.00"
+        },
+        {
+            "startDate": "April 11th, 2020",
+            "endDate": "April 17th, 2020",
+            "amount": "555.00"
+        },
+        {
+            "startDate": "April 18th, 2020",
+            "endDate": "April 24th, 2020",
+            "amount": "555.00"
+        },
+        {
+            "startDate": "April 25th, 2020",
+            "endDate": "May 1st, 2020",
+            "amount": "555.00"
+        },
+        {
+            "startDate": "May 2nd, 2020",
+            "endDate": "May 8th, 2020",
+            "amount": "555.00"
+        },
+        {
+            "startDate": "May 9th, 2020",
+            "endDate": "May 15th, 2020",
+            "amount": "555.00"
+        },
+        {
+            "startDate": "May 16th, 2020",
+            "endDate": "May 22nd, 2020",
+            "amount": "555.00"
+        },
+        {
+            "startDate": "May 23rd, 2020",
+            "endDate": "May 27th, 2020",
+            "amount": "396.43"
+        }
+    ]
+}
