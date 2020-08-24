@@ -14,7 +14,7 @@ To execute the unit tests use `npm test`.
 To run the application use `npm start`.
 
 ## Run the tests and application 
-To execute the unit test cases and run the application, use `npm start:with:test`.
+To execute the unit test cases and run the application, use `npm run start:with:test`.
 
 ### Contact
 Do feel free to contact [me](mailto:kasibkismath@gmail.com) for any queries and this project is open for development.
